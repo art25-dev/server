@@ -1,6 +1,5 @@
 const consola = require('consola')
 const express = require('express')
-const bodyParser = require('body-parser')
 const path = require('path')
 const keys = require("./keys")
 const app = express()
@@ -11,10 +10,8 @@ const HOST = process.env.HOST || keys.HOST
 const PORT = process.env.PORT || keys.PORT
 
 
-
 // Обработка JSON
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(express.json())
 
 // Регистрация статичной директории
 app.use(express.static(path.join(__dirname, 'public')))
