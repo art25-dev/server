@@ -1,15 +1,27 @@
 const Post = require("../models/post_M")
 
+// Функция получения всех постов
+module.exports.all = async (req, res) => {
+  try {
+    const post = await Post.find()
+    res.status(201).json(post)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+},
 
-// Функция получения всех постов из БД
-module.exports.getAllPost = async (req, res) => {
-  try {} catch (e) {
+// Функция получения одного поста по id
+module.exports.id = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+    res.status(201).json(post)
+  } catch (e) {
     res.status(500).json(e)
   }
 },
 
 // Функция создания поста
-module.exports.create = async (req, res) => {
+module.exports.add = async (req, res) => {
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
@@ -17,19 +29,18 @@ module.exports.create = async (req, res) => {
   })
   try {
     await post.save()
-    consola.info({
-      message: post,
-      badge: true
-    })
     res.status(201).json(post)
   } catch (e) {
     res.status(500).json(e)
   }
 },
 
-// Функция удаления поста
-module.exports.remove = async (req, res) => {
-  try {} catch (e) {
+// Функция удаления поста по id
+module.exports.del = async (req, res) => {
+  try {
+    await Post.deleteOne({ _id: req.params.id })
+    res.json({ message: "Объявление удалено" })
+  } catch (e) {
     res.status(500).json(e)
   }
 }
