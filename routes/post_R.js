@@ -2,13 +2,19 @@ const { Router}  = require('express')
 const post_C = require("../controllers/post_C")
 const router = Router()
 
-// Получение списка постов
+// Получение всех постов
 router.get(
   "/all/",
   post_C.all
 )
 
-// Получение списка постов
+// Получение активных постов
+router.get(
+  "/active/",
+  post_C.active
+)
+
+// Получение поста по ID
 router.get(
   "/:id/",
   post_C.id
@@ -20,12 +26,12 @@ router.post(
   post_C.add
 )
 
-// Изменение поста
+// Изменение поста по ID
 router.put('/:id', (req, res) => {
 
 })
 
-// Удаление поста
+// Удаление поста по ID
 router.delete(
   "/del/:id",
   post_C.del

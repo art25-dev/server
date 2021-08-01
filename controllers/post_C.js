@@ -10,6 +10,16 @@ module.exports.all = async (req, res) => {
   }
 },
 
+// Функция получения активных постов
+module.exports.active = async (req, res) => {
+  try {
+    const post = await Post.find({ status: true })
+    res.status(201).json(post)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+},
+
 // Функция получения одного поста по id
 module.exports.id = async (req, res) => {
   try {
