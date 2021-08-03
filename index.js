@@ -5,6 +5,7 @@ const keys = require("./keys")
 const app = express()
 const mongoose = require("mongoose")
 const postRoutes = require('./routes/post_R')
+const navRoutes = require('./routes/nav_R')
 
 const HOST = process.env.HOST || keys.HOST
 const PORT = process.env.PORT || keys.PORT
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // Регистрация роутов
 app.use("/api/post", postRoutes)
+app.use("/api/nav", navRoutes)
 
 
 app.use((req, res, next) => {
