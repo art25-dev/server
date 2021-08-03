@@ -13,7 +13,8 @@ module.exports.all = async (req, res) => {
 // Функция получения дочерних пунктов меню
 module.exports.children = async (req, res) => {
   try {
-
+    const nav = await Nav.find({parent: req.params.id})
+    res.status(201).json(nav)
   } catch (e) {
     res.status(500).json(e)
   }
@@ -44,6 +45,15 @@ module.exports.add = async (req, res) => {
     res.status(500).json(e)
   }
 },
+
+// Функция изменения поста по id
+module.exports.edit = async (req, res) => {
+  try {
+    
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
 
 // Функция удаления поста по id
 module.exports.del = async (req, res) => {

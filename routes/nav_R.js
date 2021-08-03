@@ -27,9 +27,10 @@ router.post(
 )
 
 // Изменение пункта меню по ID
-router.put('/:id', (req, res) => {
-
-})
+router.put(
+  '/edit/:id', 
+  nav_C.edit  
+)
 
 // Удаление пункта меню по ID
 router.delete(
