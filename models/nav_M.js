@@ -7,7 +7,7 @@ const navSchema = new Schema({
   },
   parent: {
     type: String,
-    default: null
+    default: 'none'
   },
   type: {
     type: String,

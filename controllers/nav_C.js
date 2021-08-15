@@ -33,7 +33,7 @@ module.exports.id = async (req, res) => {
 // Функция создания поста
 module.exports.add = async (req, res) => {
   const nav = new Nav({
-    title: req.body.title,
+    title: req.body.title.toLowerCase(),
     parent: req.body.parent,
     type: req.body.type,
     file: req.body.file
@@ -49,7 +49,7 @@ module.exports.add = async (req, res) => {
 // Функция изменения поста по id
 module.exports.edit = async (req, res) => {
   try {
-    
+
   } catch (e) {
     res.status(500).json(e)
   }
