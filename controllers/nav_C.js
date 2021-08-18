@@ -33,7 +33,7 @@ module.exports.id = async (req, res) => {
 // Функция создания поста
 module.exports.add = async (req, res) => {
   const nav = new Nav({
-    title: req.body.title.toLowerCase(),
+    title: req.body.title,
     parent: req.body.parent,
     type: req.body.type,
     file: req.body.file

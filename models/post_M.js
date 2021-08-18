@@ -1,6 +1,4 @@
 const { Schema, model } = require('mongoose')
-const moment = require('moment')
-moment.locale('ru');
 
 const postSchema = new Schema({
   title: {
@@ -16,8 +14,8 @@ const postSchema = new Schema({
     default: true
   },
   date: {
-    type: String,
-    default: moment().format('L')
+    type: Date,
+    default: Date.now
   },
 })
 
