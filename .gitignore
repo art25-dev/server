@@ -71,6 +71,7 @@ nuxt
 
 # Nuxt generate
 dist
+public
 
 # vuepress build output
 .vuepress/dist
@@ -91,6 +92,3 @@ sw.*
 # Vim swap files
 *.swp
 
-/static/**/*.pdf
-!static/default.pdf
-*.zip

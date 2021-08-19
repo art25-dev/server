@@ -8,4 +8,9 @@ router.get(
   date_C.getDate
 )
 
+router.get(
+  "/db/",
+  date_C.getDateDb
+)
+
 module.exports = router
