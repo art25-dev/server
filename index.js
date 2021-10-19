@@ -3,10 +3,19 @@ const express = require('express')
 const path = require('path')
 const keys = require("./keys")
 const app = express()
+
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+
+io.on('connection', socket => {
+  console.log(123)
+})
+
 const mongoose = require("mongoose")
 const postRoutes = require('./routes/post_R')
 const navRoutes = require('./routes/nav_R')
 const dateRoutes = require('./routes/date_R')
+
 
 const HOST = process.env.HOST || keys.HOST
 const PORT = process.env.PORT || keys.PORT
@@ -42,7 +51,7 @@ async function start() {
     }
 
     // Запуск сервера
-    app.listen(PORT, HOST, () => {
+    server.listen(PORT, HOST, () => {
       consola.ready({
         message: `Server listening - http://${HOST}:${PORT}`,
         badge: true
