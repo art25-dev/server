@@ -15,6 +15,9 @@ const mongoose = require("mongoose")
 const postRoutes = require('./routes/post_R')
 const navRoutes = require('./routes/nav_R')
 const dateRoutes = require('./routes/date_R')
+const dbRoutes = require('./routes/db_R')
+
+const { getDbInfo } = require('./controllers/db_C')
 
 
 const HOST = process.env.HOST || keys.HOST
@@ -31,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use("/api/post", postRoutes)
 app.use("/api/nav", navRoutes)
 app.use("/api/date", dateRoutes)
+app.use("/api/db", dbRoutes)
 
 
 app.use((req, res, next) => {
@@ -50,6 +54,8 @@ async function start() {
       })
     }
 
+
+
     // Запуск сервера
     server.listen(PORT, HOST, () => {
       consola.ready({
@@ -66,5 +72,5 @@ async function start() {
 }
 
 start()
-
+getDbInfo()
 
