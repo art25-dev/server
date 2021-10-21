@@ -1,22 +1,44 @@
 const path = require('path')
-const fs = require("fs");
-const watch = require('node-watch');
+const fs = require("fs")
+const watch = require('node-watch')
+const glob = require("glob")
 
 // Функция получения информации о БД
 module.exports.getDbInfo = async (req, res) => {
   try {
+    const dbInfo = {
+      date: null,
+      size: null,
+      status: null
+    }
+    glob(`**/${path.join(__dirname, '../sources/db')}/*.zip`, (er, files) => {
+      if(files.length === 0) {
+        dbInfo.status = false
+        console.log(dbInfo)
+      } else {
+        dbInfo.date = Date.now()
+        dbInfo.size = fs.statSync(files[0]).size
+        dbInfo.status = true
+        console.log(dbInfo)
+      }
+    })
+
     watch(path.join(__dirname, '../sources/db'), { recursive: false, filter: /\.zip$/ }, (evt, name) => {
       if (evt == 'update') {
-        const dbInfo =  {
-          date: Date.now(),
-          size: fs.statSync(name).size
-        }
+        dbInfo.date = Date.now()
+        dbInfo.size = fs.statSync(name).size
+        dbInfo.status = true
         console.log(dbInfo);
-
-
       }
       if (evt == 'remove') {
-        console.log('Базы данных отсутствуют');
+        glob(`**/${path.join(__dirname, '../sources/db')}/*.zip`, (er, files) => {
+          if(files.length === 0) {
+            dbInfo.date = null
+            dbInfo.size = null
+            dbInfo.status = false
+            console.log(dbInfo)
+          }
+        })
       }
     });
     // res.status(200).json({})

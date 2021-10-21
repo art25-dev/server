@@ -1,11 +1,13 @@
 const consola = require('consola')
 const express = require('express')
+const app = express()
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 const path = require('path')
 const keys = require("./keys")
-const app = express()
 
-const server = require('http').createServer(app)
-const io = require('socket.io')(server)
 
 io.on('connection', socket => {
   console.log(123)

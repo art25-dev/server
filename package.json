@@ -13,6 +13,7 @@
   "dependencies": {
     "consola": "^2.15.3",
     "express": "^4.16.4",
+    "glob": "^7.2.0",
     "mongoose": "^5.13.4",
     "node-watch": "^0.7.1",
     "socket.io": "^4.2.0"
