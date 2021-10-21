@@ -1,18 +1,13 @@
 const consola = require('consola')
 const express = require('express')
 const app = express()
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+
+
+
 const path = require('path')
 const keys = require("./keys")
-
-
-io.on('connection', socket => {
-  console.log(123)
-})
-
 const mongoose = require("mongoose")
 const postRoutes = require('./routes/post_R')
 const navRoutes = require('./routes/nav_R')
@@ -25,6 +20,10 @@ const { getDbInfo } = require('./controllers/db_C')
 const HOST = process.env.HOST || keys.HOST
 const PORT = process.env.PORT || keys.PORT
 
+
+io.on('connection', socket => {
+  console.log(123)
+})
 
 // Обработка JSON
 app.use(express.json())
