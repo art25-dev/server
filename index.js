@@ -23,6 +23,11 @@ const PORT = process.env.PORT || keys.PORT
 
 io.on('connection', socket => {
   console.log(123)
+  socket.emit('dbInfo', {
+    date: Date.now(),
+    size: 123123,
+    status: true
+  })
 })
 
 // Обработка JSON
