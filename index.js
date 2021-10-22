@@ -22,7 +22,7 @@ const PORT = process.env.PORT || keys.PORT
 
 
 io.on('connection', socket => {
-  console.log(123)
+  console.log(123123)
   socket.emit('dbInfo', {
     date: Date.now(),
     size: 123123,
