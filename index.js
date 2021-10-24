@@ -2,7 +2,7 @@ const consola = require('consola')
 const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
-const io = require('socket.io')(server)
+global.io = require('socket.io')(server)
 
 
 
@@ -20,15 +20,6 @@ const { getDbInfo } = require('./controllers/db_C')
 const HOST = process.env.HOST || keys.HOST
 const PORT = process.env.PORT || keys.PORT
 
-
-io.on('connection', socket => {
-  console.log(123123)
-  socket.emit('dbInfo', {
-    date: Date.now(),
-    size: 123123,
-    status: true
-  })
-})
 
 // Обработка JSON
 app.use(express.json())
@@ -76,7 +67,8 @@ async function start() {
     })
   }
 }
-
+module.exports = app;
 start()
 getDbInfo()
+
 

@@ -14,13 +14,15 @@ module.exports.getDbInfo = async (req, res) => {
     glob(`**/${path.join(__dirname, '../sources/db')}/*.zip`, (er, files) => {
       if(files.length === 0) {
         dbInfo.status = false
-        console.log(dbInfo)
       } else {
         dbInfo.date = Date.now()
         dbInfo.size = fs.statSync(files[0]).size
         dbInfo.status = true
-        console.log(dbInfo)
       }
+
+      io.on('connection', socket => {
+        socket.emit('dbInfo', dbInfo)
+      })
     })
 
     watch(path.join(__dirname, '../sources/db'), { recursive: false, filter: /\.zip$/ }, (evt, name) => {
@@ -28,7 +30,10 @@ module.exports.getDbInfo = async (req, res) => {
         dbInfo.date = Date.now()
         dbInfo.size = fs.statSync(name).size
         dbInfo.status = true
-        console.log(dbInfo);
+
+        io.on('connection', socket => {
+          socket.emit('dbInfo', dbInfo)
+        })
       }
       if (evt == 'remove') {
         glob(`**/${path.join(__dirname, '../sources/db')}/*.zip`, (er, files) => {
@@ -36,7 +41,10 @@ module.exports.getDbInfo = async (req, res) => {
             dbInfo.date = null
             dbInfo.size = null
             dbInfo.status = false
-            console.log(dbInfo)
+
+            io.on('connection', socket => {
+              socket.emit('dbInfo', dbInfo)
+            })
           }
         })
       }
