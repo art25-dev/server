@@ -19,7 +19,7 @@ module.exports.getDbInfo = async (req, res) => {
 
       watcher.on('add', (path, stats) => {
         dbInfo.date = Date.now()
-        dbInfo.size = stats.size
+        dbInfo.size = (stats === undefined) ? null : stats.size
         dbInfo.status = true
 
         socket.emit('dbInfo', dbInfo)
