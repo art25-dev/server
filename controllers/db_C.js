@@ -12,7 +12,10 @@ module.exports.getDbInfo = async (req, res) => {
     }
 
     io.on('connection', socket => {
-      const watcher = chokidar.watch(path.join(__dirname, '../sources/db'));
+      const watcher = chokidar.watch(path.join(__dirname, '../sources/db'), {
+        ignored: /(png|jpg|jpeg|pdf)$/, // ignore dotfiles
+        persistent: true
+      });
 
       watcher.on('add', (path, stats) => {
         dbInfo.date = Date.now()
