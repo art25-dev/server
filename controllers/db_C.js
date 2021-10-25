@@ -10,31 +10,27 @@ module.exports.getDbInfo = async (req, res) => {
       size: null,
       status: false
     }
+    const watcher = chokidar.watch(path.join(__dirname, '../sources/db'), {
+      ignored: /(png|jpg|jpeg|pdf)$/, // ignore dotfiles
+      persistent: true
+    });
 
-    io.on('connection', socket => {
-      const watcher = chokidar.watch(path.join(__dirname, '../sources/db'), {
-        ignored: /(png|jpg|jpeg|pdf)$/, // ignore dotfiles
-        persistent: true
-      });
+    watcher.on('add', (path, stats) => {
+      dbInfo.date = Date.now()
+      dbInfo.size = stats.size
+      dbInfo.status = true
 
-      watcher.on('add', (path, stats) => {
-        dbInfo.date = Date.now()
-        dbInfo.size = (stats === undefined) ? null : stats.size
-        dbInfo.status = true
+      io.emit('dbInfo', dbInfo)
+      console.log(dbInfo)
+    })
 
-        socket.emit('dbInfo', dbInfo)
-        console.log(dbInfo)
-      })
+    watcher.on('unlink', (path, stats) => {
+      dbInfo.date = null
+      dbInfo.size = null
+      dbInfo.status = false
 
-      watcher.on('unlink', (path, stats) => {
-        dbInfo.date = null
-        dbInfo.size = null
-        dbInfo.status = false
-
-        socket.emit('dbInfo', dbInfo)
-        console.log(dbInfo)
-      })
-
+      io.emit('dbInfo', dbInfo)
+      console.log(dbInfo)
     })
   } catch (e) {}
 }
