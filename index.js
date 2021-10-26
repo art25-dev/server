@@ -69,6 +69,6 @@ async function start() {
 }
 module.exports = app;
 start()
-getDbInfo()
+// getDbInfo()
 
 
